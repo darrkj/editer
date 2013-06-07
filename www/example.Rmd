@@ -7,7 +7,7 @@
 An interactive way to analyze data.
 
 ```{r echo = F}
-library(boRg)
+suppressPackageStartupMessages(library(boRg))
 suppressPackageStartupMessages(require(devtools))
 suppressMessages(install_github('rCharts', 'ramnathv'))
 require(rCharts)
