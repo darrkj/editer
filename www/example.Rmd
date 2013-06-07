@@ -1,11 +1,20 @@
-# R Notebook with rCharts
-<h2 style="color:rgb(148, 190, 163);text-align:center"> NY Times 512 Paths to the White House</h2>
+
+<img src="https://secure.gravatar.com/avatar/2fa0fe61a78ecbeb22c72778420443f9?s=400&d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png" alt="some_text" width="104" height="128">
+
+# ERI Data Mining Workbook
+<h2 style="color:rgb(148, 190, 163);text-align:center"> The start of some awsome work</h2>
 <br/>
+
 ### Introduction and Setup
 This is a short demo on recreating the **NY Times** interactive feauture [512 Paths to the White House](http://www.nytimes.com/interactive/2012/11/02/us/politics/paths-to-the-white-house.html?_r=0) in an R Markdown notebook, using rCharts and Shiny. If you want to follow along, please install `rCharts` from `github` using `devtools`.  To see the original tutorial, go [here](http://timelyportfolio.github.io/rCharts_512paths).
 
-```{r eval = F}
+```{r echo = F}
+library(boRg)
+```
+
+```{r eval = T}
 require(devtools)
+
 install_github('rCharts', 'ramnathv')
 ```
 
@@ -33,12 +42,9 @@ options(
 )
 print( xtable( head( data ) ), type = "html" )
 
-#cat("<h4>let's randomize the order a bit and make some states more powerful</h4>")
-#data$votes <- data$votes[order( runif( n = nrow( data ) ) )]
-#print( xtable( head( data ) ), type = "html" )
 
 #now let's deliberately change some data
-#print( xtable( head( data[which(data$code == "FL"), ] ) ), type = "html" )
+
 #data[which(data$code == "FL"),"votes"] <- 10
 #data[which(data$code == "FL"),"rep"] <- 0.9
 #data[which(data$code == "FL"),"dem"] <- 1 - data[which(data$code == "FL"),"rep"]
