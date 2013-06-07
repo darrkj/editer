@@ -15,8 +15,6 @@ knitr::opts_chunk$set(comment = NA, results = 'asis', tidy = F, message = F)
 
 ```
 
-Before we begin charting, let us customize some settings for rCharts and knitr as copied from [the example.Rmd included with rCharts](https://github.com/ramnathv/rCharts/tree/master/inst/apps/notebook/www).
-
 
 ---
 
@@ -36,6 +34,7 @@ cal.heatMap(rbind(zoo(movie1$Daily, movie1$date), zoo(movie2$Daily, movie2$date)
 data <- movie1
 data <- data[1:10, ]
 
+data$studio <- NULL
 data$Gross <- NULL
 data$weekday <- NULL
 data$peru <- NULL
@@ -63,6 +62,7 @@ print( xtable( head( data ) ), type = "html" )
 data <- movie2
 data <- data[1:10, ]
 
+data$studio <- NULL
 data$Gross <- NULL
 data$weekday <- NULL
 data$peru <- NULL
