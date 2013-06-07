@@ -24,7 +24,7 @@ add_rCharts(libs)
 shinyUI(
   bootstrapPage(
     tags$head(
-      tags$title('An R Notebook in Shiny'),
+      tags$title('ERI Analysis Notebook'),
       tags$script(src = 'http://ace.ajax.org/build/src-min-noconflict/ace.js',
         type = 'text/javascript', charset = 'utf-8'),
       tags$link(rel = 'stylesheet', type = 'text/css', href = 'assets/ace-shiny.css'),

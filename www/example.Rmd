@@ -1,37 +1,79 @@
-
 <img src="https://secure.gravatar.com/avatar/2fa0fe61a78ecbeb22c72778420443f9?s=400&d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png" alt="some_text" width="104" height="128">
 
 # ERI Data Mining Workbook
 <h2 style="color:rgb(148, 190, 163);text-align:center"> The start of some awsome work</h2>
 <br/>
 
-### Introduction and Setup
-This is a short demo on recreating the **NY Times** interactive feauture [512 Paths to the White House](http://www.nytimes.com/interactive/2012/11/02/us/politics/paths-to-the-white-house.html?_r=0) in an R Markdown notebook, using rCharts and Shiny. If you want to follow along, please install `rCharts` from `github` using `devtools`.  To see the original tutorial, go [here](http://timelyportfolio.github.io/rCharts_512paths).
+An interactive way to analyze data.
 
 ```{r echo = F}
 library(boRg)
-```
+suppressPackageStartupMessages(require(devtools))
+suppressMessages(install_github('rCharts', 'ramnathv'))
+require(rCharts)
+knitr::opts_chunk$set(comment = NA, results = 'asis', tidy = F, message = F)
 
-```{r eval = T}
-require(devtools)
-
-install_github('rCharts', 'ramnathv')
 ```
 
 Before we begin charting, let us customize some settings for rCharts and knitr as copied from [the example.Rmd included with rCharts](https://github.com/ramnathv/rCharts/tree/master/inst/apps/notebook/www).
 
-```{r echo = T, message = F, cache = F}
-require(rCharts)
-options(RCHART_WIDTH = 600, RCHART_HEIGHT = 400)
-knitr::opts_chunk$set(comment = NA, results = 'asis', tidy = F, message = F)
-```
-
 
 ---
-### Build the Chart & Then Play What If?
-```{r}
+
+```{r fig.width = 10}
+data(mvData)
+m1 <- "X-Men Origins: Wolverine"
+m2 <- "Avatar"
+movie1 <- mvData[mvData$name == m1, ]
+movie2 <- mvData[mvData$name == m2, ]
+cal.heatMap(rbind(zoo(movie1$Daily, movie1$date), zoo(movie2$Daily, movie2$date)))
+```
+---
+### `r unique(movie1$name)`
+
+```{r echo = F}
 #get data from downloaded NYT tsv and inject in through params
-data <- read.delim(file = "http://timelyportfolio.github.io/rCharts_512paths/data/states.tsv")
+data <- movie1
+data <- data[1:10, ]
+
+data$Gross <- NULL
+data$weekday <- NULL
+data$peru <- NULL
+data$perd <- NULL
+data$rd <- NULL
+data$yd <- NULL
+data$Theaters <- NULL
+data$Avg <- NULL
+row.names(data) <- 1:10
+data$date <- as.character(data$date)
+
+
+#quick look at the data
+require(xtable)
+
+options(
+  xtable.html.table.attributes = 
+    'class="table table-condensed table-bordered table-striped"'
+)
+print( xtable( head( data ) ), type = "html" )
+```
+### `r unique(movie2$name)`
+```{r echo = F}
+#get data from downloaded NYT tsv and inject in through params
+data <- movie2
+data <- data[1:10, ]
+
+data$Gross <- NULL
+data$weekday <- NULL
+data$peru <- NULL
+data$perd <- NULL
+data$rd <- NULL
+data$yd <- NULL
+data$Theaters <- NULL
+data$Avg <- NULL
+row.names(data) <- 1:10
+data$date <- as.character(data$date)
+
 
 #quick look at the data
 require(xtable)
@@ -43,31 +85,4 @@ options(
 print( xtable( head( data ) ), type = "html" )
 
 
-#now let's deliberately change some data
-
-#data[which(data$code == "FL"),"votes"] <- 10
-#data[which(data$code == "FL"),"rep"] <- 0.9
-#data[which(data$code == "FL"),"dem"] <- 1 - data[which(data$code == "FL"),"rep"]
-#print( xtable( head( data[which(data$code == "FL"), ] ) ), type = "html" )
-#print( xtable( head( data[which(data$code == "OH"), ] ) ), type = "html" )
-#data[which(data$code == "OH"),"votes"] <- 0
-
-p1 <- rCharts$new()
-p1$field( 'lib', "www/assets/x512paths" )
-p1$set( data = toJSONArray( data ) )
-p1$print( 'g-chart' )
 ```
----
-
-### Credits in Original Example
-
->I would like to acknowledge the efforts of @yihui and @rstudio in bringing R Notebooks to the R community. I would like to thank @yihui for his excellent shiny app in the knitr package, which was the basis for this app. Without their efforts, rCharts and this demo would not have been possible.
-
-### Additional Credit from me
-Thanks [Ramnath](http://github.com/ramnathv) for rCharts and slidify and genius bug elimination.
-
-
-<br/>
-For more information, check out
-
-http://github.com/ramnathv/rCharts
